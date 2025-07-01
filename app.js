@@ -11,7 +11,6 @@ let appState = {
 
 // Security utility functions
 function escapeHtml(text) {
-    """HTML轉義函數，防止XSS攻擊"""
     if (typeof text !== 'string') {
         return text;
     }
@@ -21,7 +20,6 @@ function escapeHtml(text) {
 }
 
 function sanitizeUserInput(input) {
-    """清理用戶輸入，移除潛在的惡意內容"""
     if (typeof input !== 'string') {
         return input;
     }
@@ -35,7 +33,6 @@ function sanitizeUserInput(input) {
 }
 
 function createSafeElement(tagName, textContent, className) {
-    """安全創建DOM元素"""
     const element = document.createElement(tagName);
     if (textContent) {
         element.textContent = textContent; // 使用textContent而非innerHTML
@@ -193,7 +190,7 @@ async function processFiles(files) {
                 showNotification(`${file.name} 上傳失敗：${result.error}`, 'error');
             }
         } catch (error) {
-            console.error('Upload error:', error);
+            // console.error('Upload error:', error);
             showNotification(`${file.name} 上傳失敗：網路錯誤`, 'error');
         }
     }
@@ -300,7 +297,7 @@ async function handleGeneratePPT() {
         }
         
     } catch (error) {
-        console.error('Generation error:', error);
+        // console.error('Generation error:', error);
         showNotification('生成過程中發生網路錯誤，請重試', 'error');
     } finally {
         appState.isGenerating = false;
@@ -629,24 +626,18 @@ async function handleFeedbackSubmit() {
         const result = await response.json();
 
         if (result.success) {
-            // 進行設計學習
-            const userId = getUserId();
-            await performDesignLearning(userId, appState.currentPresentationId, rating, feedback);
-            
-            showNotification('感謝您的反饋！AI 已學習您的偏好，下次將提供更個性化的建議', 'success');
-            feedbackText.value = '';
-            appState.currentRating = 0;
-            updateStarDisplay(0);
-            updateRatingText(0);
-            
-            // 更新個性化推薦顯示
-            await updatePersonalizedRecommendations(userId);
+            showNotification('反饋提交成功！AI正在學習您的偏好。', 'success');
+
+            // 異步執行設計學習和推薦更新
+            performDesignLearning(getUserId(), appState.currentPresentationId, rating, feedback);
+            updatePersonalizedRecommendations(getUserId());
+
         } else {
             showNotification(`反饋提交失敗：${result.error}`, 'error');
         }
 
     } catch (error) {
-        console.error('Feedback error:', error);
+        // console.error('Feedback error:', error);
         showNotification('反饋提交過程中發生網路錯誤', 'error');
     }
 }
@@ -688,13 +679,13 @@ async function performDesignLearning(userId, presentationId, rating, feedbackTex
         const learningResult = await learningResponse.json();
         
         if (learningResult.success) {
-            console.log('設計學習完成:', learningResult.learning_result);
-            
-            // 更新用戶偏好顯示
-            await updateUserProfile(userId);
+            // console.log('設計學習完成:', learningResult.learning_result);
+            showNotification('AI已根據您的反饋完成學習！', 'info');
+            // 更新用戶個人檔案以反映學習進度
+            updateUserProfile(userId);
         }
     } catch (error) {
-        console.warn('設計學習失敗，但反饋已保存:', error);
+        // console.warn('設計學習失敗，但反饋已保存:', error);
     }
 }
 
@@ -708,7 +699,7 @@ async function updatePersonalizedRecommendations(userId, presentationType = 'bus
             displayPersonalizedRecommendations(result.recommendations);
         }
     } catch (error) {
-        console.warn('獲取個性化推薦失敗:', error);
+        // console.warn('獲取個性化推薦失敗:', error);
     }
 }
 
@@ -793,7 +784,7 @@ async function updateUserProfile(userId) {
             displayUserProfile(result.profile);
         }
     } catch (error) {
-        console.warn('獲取用戶檔案失敗:', error);
+        // console.warn('獲取用戶檔案失敗:', error);
     }
 }
 
@@ -860,9 +851,9 @@ async function generateSmartChart(chartData, chartType = null, stylePreferences 
             throw new Error(result.error);
         }
     } catch (error) {
-        console.error('智能圖表生成失敗:', error);
+        // console.error('智能圖表生成失敗:', error);
         showNotification('圖表生成失敗：' + error.message, 'error');
-        return null;
+        return { success: false, error: error.message };
     }
 }
 
@@ -890,9 +881,9 @@ async function generateSmartIcon(concept, style = 'modern', colorScheme = null) 
             throw new Error(result.error);
         }
     } catch (error) {
-        console.error('智能圖標生成失敗:', error);
+        // console.error('智能圖標生成失敗:', error);
         showNotification('圖標生成失敗：' + error.message, 'error');
-        return null;
+        return { success: false, error: error.message };
     }
 }
 
@@ -913,13 +904,14 @@ async function getChartRecommendations(dataSample) {
         
         if (result.success) {
             displayChartRecommendations(result);
-            return result;
+            return result.recommendations;
         } else {
             throw new Error(result.error);
         }
     } catch (error) {
-        console.error('圖表推薦獲取失敗:', error);
-        return null;
+        // console.error('圖表推薦獲取失敗:', error);
+        showNotification('獲取圖表推薦失敗', 'error');
+        return [];
     }
 }
 
@@ -1189,7 +1181,7 @@ async function handleChartGeneration() {
         }
         
     } catch (error) {
-        console.error('Chart generation error:', error);
+        // console.error('Chart generation error:', error);
         showNotification('圖表數據格式錯誤，請檢查JSON格式', 'error');
     }
 }
@@ -1239,7 +1231,7 @@ async function getChartRecommendationsFromInput() {
         }
         
     } catch (error) {
-        console.error('Chart recommendations error:', error);
+        // console.error('Chart recommendations error:', error);
         showNotification('數據格式錯誤，請檢查JSON格式', 'error');
     }
 }
@@ -1748,7 +1740,7 @@ async function submitBatchJob() {
         }
         
     } catch (error) {
-        console.error('Batch job submission error:', error);
+        // console.error('Batch job submission error:', error);
         showNotification('提交批量任務失敗：' + error.message, 'error');
     }
 }
@@ -1756,40 +1748,36 @@ async function submitBatchJob() {
 // 啟動批量處理
 async function startBatchProcessing() {
     try {
-        const response = await fetch('/api/batch/process-queue', {
-            method: 'POST'
-        });
-        
+        const response = await fetch('/api/batch/start', { method: 'POST' });
         const result = await response.json();
-        
         if (result.success) {
-            console.log('批量處理已啟動');
+            showNotification('批量處理已啟動', 'success');
+            // console.log('批量處理已啟動');
+            refreshJobs();
         }
-        
     } catch (error) {
-        console.error('Start batch processing error:', error);
+        // console.error('Start batch processing error:', error);
+        showNotification('啟動批量處理失敗', 'error');
     }
 }
 
 // 刷新工作列表
 async function refreshJobs() {
     try {
-        const jobsList = document.getElementById('jobsList');
-        if (!jobsList) return;
-        
-        // 這裡應該從服務器獲取真實的工作列表
-        // 暫時顯示模擬數據
-        const jobs = Array.from(activeJobs.values());
-        
-        if (jobs.length === 0) {
-            jobsList.innerHTML = '<div class="no-jobs">暫無批量工作</div>';
-            return;
+        const response = await fetch('/api/monitor/jobs');
+        const result = await response.json();
+        if (result.success) {
+            const jobs = result.jobs;
+            const jobsList = document.getElementById('jobsList');
+            if (jobs.length === 0) {
+                jobsList.innerHTML = '<div class="no-jobs">暫無批量工作</div>';
+                return;
+            }
+            jobsList.innerHTML = jobs.map(job => createJobItemHTML(job)).join('');
         }
-        
-        jobsList.innerHTML = jobs.map(job => createJobItemHTML(job)).join('');
-        
     } catch (error) {
-        console.error('Refresh jobs error:', error);
+        // console.error('Refresh jobs error:', error);
+        showNotification('刷新任務列表失敗', 'error');
     }
 }
 
@@ -1868,131 +1856,130 @@ function formatDateTime(dateString) {
 // 刷新性能指標
 async function refreshMetrics() {
     try {
-        await Promise.all([
-            updateAPIMetrics(),
-            updateBatchStats(),
-            updateCacheStats(),
-            updateSystemStats()
-        ]);
-        
+        const response = await fetch('/api/monitor/metrics');
+        const result = await response.json();
+        if (result.success) {
+            const metrics = result.metrics;
+            updateAPIMetrics(metrics.api_metrics);
+            updateBatchStats(metrics.batch_stats);
+            updateCacheStats(metrics.cache_stats);
+            updateSystemStats(metrics.system_stats);
+        }
     } catch (error) {
-        console.error('Refresh metrics error:', error);
+        // console.error('Refresh metrics error:', error);
     }
 }
 
 // 更新API性能指標
-async function updateAPIMetrics() {
-    try {
-        const response = await fetch('/api/performance/metrics');
-        const result = await response.json();
-        
-        const metricsContainer = document.getElementById('apiMetrics');
-        if (metricsContainer && result.success) {
-            const global = result.metrics.global || {};
-            
-            metricsContainer.innerHTML = `
-                <div class="metric-item">
-                    <span class="metric-label">總請求數</span>
-                    <span class="metric-value">${global.total_requests || 0}</span>
-                </div>
-                <div class="metric-item">
-                    <span class="metric-label">平均響應時間</span>
-                    <span class="metric-value">${(global.average_response_time || 0).toFixed(2)}ms</span>
-                </div>
-                <div class="metric-item">
-                    <span class="metric-label">錯誤率</span>
-                    <span class="metric-value ${getMetricClass(global.error_rate)}">${(global.error_rate * 100 || 0).toFixed(2)}%</span>
-                </div>
-            `;
-        }
-        
-    } catch (error) {
-        console.error('Update API metrics error:', error);
-        const metricsContainer = document.getElementById('apiMetrics');
-        if (metricsContainer) {
-            metricsContainer.innerHTML = '<div class="metric-item">載入失敗</div>';
-        }
-    }
+async function updateAPIMetrics(metrics) {
+    const global = metrics.global || { success_rate: 0, error_rate: 0, avg_latency: 0 };
+    document.getElementById('apiSuccessRate').innerHTML = `
+        <span class="metric-label">成功率</span>
+        <span class="metric-value ${getMetricClass(global.success_rate, true)}">${(global.success_rate * 100 || 0).toFixed(2)}%</span>
+    `;
+    document.getElementById('apiErrorRate').innerHTML = `
+        <span class="metric-label">錯誤率</span>
+        <span class="metric-value ${getMetricClass(global.error_rate)}">${(global.error_rate * 100 || 0).toFixed(2)}%</span>
+    `;
+    document.getElementById('apiAvgLatency').innerHTML = `
+        <span class="metric-label">平均延遲</span>
+        <span class="metric-value ${getMetricClass(global.avg_latency)}">${(global.avg_latency || 0).toFixed(2)}ms</span>
+    `;
 }
 
 // 更新批量處理統計
-async function updateBatchStats() {
-    try {
-        const response = await fetch('/api/performance/batch-stats');
-        const result = await response.json();
-        
-        const statsContainer = document.getElementById('batchStats');
-        if (statsContainer && result.success) {
-            const stats = result.stats || {};
-            
-            statsContainer.innerHTML = `
-                <div class="metric-item">
-                    <span class="metric-label">已處理任務</span>
-                    <span class="metric-value">${stats.total_processed || 0}</span>
-                </div>
-                <div class="metric-item">
-                    <span class="metric-label">失敗任務</span>
-                    <span class="metric-value">${stats.total_failed || 0}</span>
-                </div>
-                <div class="metric-item">
-                    <span class="metric-label">平均處理時間</span>
-                    <span class="metric-value">${(stats.average_processing_time || 0).toFixed(2)}秒</span>
-                </div>
-                <div class="metric-item">
-                    <span class="metric-label">緩存命中率</span>
-                    <span class="metric-value ${getMetricClass(stats.cache_hit_rate, true)}">${(stats.cache_hit_rate * 100 || 0).toFixed(2)}%</span>
-                </div>
-            `;
-        }
-        
-    } catch (error) {
-        console.error('Update batch stats error:', error);
-        const statsContainer = document.getElementById('batchStats');
-        if (statsContainer) {
-            statsContainer.innerHTML = '<div class="metric-item">載入失敗</div>';
-        }
-    }
-}
-
-// 更新緩存統計
-async function updateCacheStats() {
-    const cacheContainer = document.getElementById('cacheStats');
-    if (cacheContainer) {
-        // 模擬緩存統計數據
-        cacheContainer.innerHTML = `
+async function updateBatchStats(stats) {
+    const statsContainer = document.getElementById('batchStats');
+    if (statsContainer) {
+        statsContainer.innerHTML = `
             <div class="metric-item">
-                <span class="metric-label">緩存項目</span>
-                <span class="metric-value">124</span>
+                <span class="metric-label">已處理任務</span>
+                <span class="metric-value">${stats.total_processed || 0}</span>
             </div>
             <div class="metric-item">
-                <span class="metric-label">緩存大小</span>
-                <span class="metric-value">2.3 MB</span>
+                <span class="metric-label">失敗任務</span>
+                <span class="metric-value">${stats.total_failed || 0}</span>
             </div>
             <div class="metric-item">
-                <span class="metric-label">命中率</span>
-                <span class="metric-value good">89.5%</span>
+                <span class="metric-label">平均處理時間</span>
+                <span class="metric-value">${(stats.average_processing_time || 0).toFixed(2)}秒</span>
+            </div>
+            <div class="metric-item">
+                <span class="metric-label">緩存命中率</span>
+                <span class="metric-value ${getMetricClass(stats.cache_hit_rate, true)}">${(stats.cache_hit_rate * 100 || 0).toFixed(2)}%</span>
+            </div>
+            <div class="metric-item">
+                <span class="metric-label">完成率</span>
+                <span class="metric-value">${stats.completed_rate ? (stats.completed_rate * 100).toFixed(1) : 0}%</span>
             </div>
         `;
     }
 }
 
+// 更新緩存統計
+async function updateCacheStats(stats) {
+    const cacheContainer = document.getElementById('cacheStats');
+    if (cacheContainer) {
+        cacheContainer.innerHTML = `
+            <div class="metric-item">
+                <span class="metric-label">緩存項目</span>
+                <span class="metric-value">${stats.total_cached || 0}</span>
+            </div>
+            <div class="metric-item">
+                <span class="metric-label">緩存大小</span>
+                <span class="metric-value">${(stats.cache_size || 0).toFixed(2)} MB</span>
+            </div>
+            <div class="metric-item">
+                <span class="metric-label">命中率</span>
+                <span class="metric-value ${getMetricClass(stats.cache_hit_rate, true)}">${(stats.cache_hit_rate * 100 || 0).toFixed(2)}%</span>
+            </div>
+            <div class="metric-item">
+                <span class="metric-label">清理次數</span>
+                <span class="metric-value">${stats.cache_cleanups || 0}</span>
+            </div>
+            <div class="metric-item">
+                <span class="metric-label">清理大小</span>
+                <span class="metric-value">${(stats.cache_size_cleaned || 0).toFixed(2)} MB</span>
+            </div>
+            <div class="metric-item">
+                <span class="metric-label">清理率</span>
+                <span class="metric-value">${stats.cache_clean_rate ? (stats.cache_clean_rate * 100).toFixed(1) : 0}%</span>
+            </div>
+        `;
+        if (stats.cache_hit_rate >= 0.8) {
+            cacheContainer.classList.add('good');
+            cacheContainer.classList.remove('warning', 'danger');
+        } else if (stats.cache_hit_rate >= 0.6) {
+            cacheContainer.classList.add('warning');
+            cacheContainer.classList.remove('danger');
+        } else {
+            cacheContainer.classList.add('danger');
+        }
+        if (stats.cache_hit_rate === 1) {
+            showNotification('緩存已成功清理', 'success');
+            refreshMetrics();
+        } else if (stats.cache_hit_rate < 0.8) {
+            showNotification('緩存清理失敗：' + stats.cache_error, 'error');
+        }
+    }
+}
+
 // 更新系統統計
-async function updateSystemStats() {
+async function updateSystemStats(stats) {
     const systemContainer = document.getElementById('systemStats');
     if (systemContainer) {
-        // 模擬系統統計數據
         systemContainer.innerHTML = `
             <div class="metric-item">
                 <span class="metric-label">CPU使用率</span>
-                <span class="metric-value warning">45.2%</span>
+                <span class="metric-value warning">${(stats.cpu_usage || 0).toFixed(1)}%</span>
             </div>
             <div class="metric-item">
                 <span class="metric-label">內存使用</span>
-                <span class="metric-value">128 MB</span>
+                <span class="metric-value">${(stats.memory_usage || 0).toFixed(2)} MB</span>
             </div>
             <div class="metric-item">
                 <span class="metric-label">系統運行時間</span>
-                <span class="metric-value">2天 14小時</span>
+                <span class="metric-value">${formatDuration(stats.uptime || 0)}</span>
             </div>
         `;
     }
@@ -2048,7 +2035,7 @@ async function clearCache() {
         }
         
     } catch (error) {
-        console.error('Clear cache error:', error);
+        // console.error('Clear cache error:', error);
         showNotification('清理緩存失敗：' + error.message, 'error');
     }
 }
@@ -2087,7 +2074,7 @@ async function downloadMetrics() {
         }
         
     } catch (error) {
-        console.error('Download metrics error:', error);
+        // console.error('Download metrics error:', error);
         showNotification('下載報告失敗：' + error.message, 'error');
     }
 }
