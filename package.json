@@ -1,0 +1,39 @@
+{
+  "name": "ai-ppt-frontend",
+  "version": "1.0.0",
+  "description": "AI PPT Generator 前端用戶界面",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "python -m http.server 8000",
+    "build": "echo 'No build step required for vanilla JS'",
+    "test": "echo 'No tests specified'",
+    "lint": "echo 'No linting configured'"
+  },
+  "keywords": [
+    "ai",
+    "ppt",
+    "powerpoint",
+    "generator",
+    "frontend",
+    "javascript",
+    "css",
+    "html"
+  ],
+  "author": "AI PPT Generator Team",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/samulee003/ai-ppt-frontend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/samulee003/ai-ppt-frontend/issues"
+  },
+  "homepage": "https://github.com/samulee003/ai-ppt-frontend#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+} 
