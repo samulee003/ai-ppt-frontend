@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI PPT 製作器 - 智能簡報生成系統</title>
+    <title>AI PPT 製作器</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,426 +12,68 @@
         <div class="container">
             <div class="header__content">
                 <h1 class="header__title">AI PPT 製作器</h1>
-                <p class="header__subtitle">學習您的簡報風格，智能生成專業演示文稿</p>
+                <p class="header__subtitle">上傳模板與內容，一鍵生成您的專屬簡報</p>
             </div>
         </div>
     </header>
 
     <main class="main">
         <div class="container">
-            <!-- Features Showcase -->
-            <section class="features">
-                <h2 class="section-title">核心功能</h2>
-                <div class="features__grid">
-                    <div class="feature-card" data-feature="template">
-                        <div class="feature-card__icon">🧠</div>
-                        <h3 class="feature-card__title">模板學習</h3>
-                        <p class="feature-card__description">AI 從您現有的 PPT 模板中學習設計風格</p>
-                    </div>
-                    <div class="feature-card" data-feature="layout">
-                        <div class="feature-card__icon">📐</div>
-                        <h3 class="feature-card__title">智能排版</h3>
-                        <p class="feature-card__description">智能安排內容和視覺元素的佈局</p>
-                    </div>
-                    <div class="feature-card" data-feature="brand">
-                        <div class="feature-card__icon">🎨</div>
-                        <h3 class="feature-card__title">品牌一致性</h3>
-                        <p class="feature-card__description">在所有投影片中保持您的品牌識別</p>
-                    </div>
-                    <div class="feature-card" data-feature="speed">
-                        <div class="feature-card__icon">⚡</div>
-                        <h3 class="feature-card__title">快速生成</h3>
-                        <p class="feature-card__description">比手動製作快 10 倍的簡報創建速度</p>
+            <!-- Step 1: Template Upload -->
+            <section class="card">
+                <h2 class="section-title">第一步：上傳 PPT 模板</h2>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-area__content">
+                        <div class="upload-area__icon">📁</div>
+                        <h3 class="upload-area__title">分析您的設計風格</h3>
+                        <p class="upload-area__description">拖拽一個 .pptx 模板文件到此處，或點擊按鈕選擇</p>
+                        <button class="btn btn--outline upload-btn" id="uploadBtn">選擇模板文件</button>
+                        <input type="file" id="fileInput" accept=".pptx" hidden>
                     </div>
                 </div>
             </section>
-
-            <!-- Statistics -->
-            <section class="statistics">
-                <div class="statistics__grid">
-                    <div class="stat-item">
-                        <div class="stat-item__value">99%</div>
-                        <div class="stat-item__label">品牌一致性</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-item__value">10x</div>
-                        <div class="stat-item__label">節省時間</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-item__value">95%</div>
-                        <div class="stat-item__label">用戶滿意度</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-item__value">500+</div>
-                        <div class="stat-item__label">已學習模板</div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Template Learning Section -->
-            <section class="template-learning">
-                <h2 class="section-title">模板學習系統</h2>
-                <div class="template-learning__content">
-                    <div class="upload-area" id="uploadArea">
-                        <div class="upload-area__content">
-                            <div class="upload-area__icon">📁</div>
-                            <h3 class="upload-area__title">上傳您的 PPT 模板</h3>
-                            <p class="upload-area__description">拖拽文件到此處或點擊選擇文件</p>
-                            <button class="btn btn--outline upload-btn" id="uploadBtn">選擇文件</button>
-                            <input type="file" id="fileInput" accept=".pptx,.ppt" multiple hidden>
-                        </div>
-                    </div>
-                    
-                    <div class="learned-patterns">
-                        <h3 class="learned-patterns__title">已學習的設計模式</h3>
-                        <div class="pattern-cards">
-                            <div class="pattern-card">
-                                <h4 class="pattern-card__type">企業藍色風格</h4>
-                                <ul class="pattern-card__elements">
-                                    <li>#1E3A8A 色彩方案</li>
-                                    <li>Montserrat 字體</li>
-                                    <li>簡潔極簡佈局</li>
-                                </ul>
-                            </div>
-                            <div class="pattern-card">
-                                <h4 class="pattern-card__type">創意橙色風格</h4>
-                                <ul class="pattern-card__elements">
-                                    <li>#F97316 強調色彩</li>
-                                    <li>創意字體設計</li>
-                                    <li>動態版面配置</li>
-                                </ul>
-                            </div>
-                            <div class="pattern-card">
-                                <h4 class="pattern-card__type">學術灰色風格</h4>
-                                <ul class="pattern-card__elements">
-                                    <li>#6B7280 專業色調</li>
-                                    <li>Times New Roman</li>
-                                    <li>結構化格式</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- System Architecture -->
-            <section class="architecture">
-                <h2 class="section-title">系統架構</h2>
-                <div class="architecture__image">
-                    <img src="https://pplx-res.cloudinary.com/image/upload/v1751295166/pplx_code_interpreter/b5e6b801_vzpmyj.jpg" alt="AI PPT Generator System Architecture" class="architecture__img">
-                    <p class="architecture__caption">AI PPT 生成器系統架構 - 從用戶輸入到智能簡報生成的完整工作流程</p>
-                </div>
-            </section>
-
-            <!-- Smart Visual Generation -->
-            <section class="smart-visuals">
-                <h2 class="section-title">🎨 智能視覺生成</h2>
-                
-                <!-- 圖表生成區域 -->
-                <div class="visual-generation-area">
-                    <div class="visual-section">
-                        <h3 class="visual-section__title">📊 智能圖表生成</h3>
-                        <div class="chart-generation-form">
-                            <div class="form-group">
-                                <label class="form-label">圖表數據 (JSON格式):</label>
-                                <textarea class="form-control" id="chartDataInput" rows="3" placeholder='{"values": [10, 20, 30, 40], "labels": ["第一季", "第二季", "第三季", "第四季"], "title": "季度銷售額"}'></textarea>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label class="form-label">圖表類型:</label>
-                                    <select class="form-control" id="chartTypeSelect">
-                                        <option value="">🎯 智能推薦</option>
-                                        <option value="bar">📊 柱狀圖</option>
-                                        <option value="line">📈 折線圖</option>
-                                        <option value="pie">🥧 餅圖</option>
-                                        <option value="scatter">⚫ 散點圖</option>
-                                        <option value="area">📊 面積圖</option>
-                                        <option value="histogram">📊 直方圖</option>
-                                        <option value="heatmap">🔥 熱力圖</option>
-                                        <option value="box">📦 箱線圖</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">色彩方案:</label>
-                                    <select class="form-control" id="chartColorScheme">
-                                        <option value="professional">🏢 專業</option>
-                                        <option value="vibrant">🌈 鮮豔</option>
-                                        <option value="warm">☀️ 暖色</option>
-                                        <option value="cool">❄️ 冷色</option>
-                                        <option value="monochrome">⚫ 單色</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="visual-controls">
-                                <button class="btn btn--primary" onclick="handleChartGeneration()">
-                                    📊 生成智能圖表
-                                </button>
-                                <button class="btn btn--secondary" onclick="getChartRecommendationsFromInput()">
-                                    🎯 獲取推薦
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- 圖標生成區域 -->
-                    <div class="visual-section">
-                        <h3 class="visual-section__title">🎨 智能圖標生成</h3>
-                        <div class="icon-generation-form">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label class="form-label">圖標概念:</label>
-                                    <input type="text" class="form-control" id="iconConceptInput" placeholder="例如：商業、科技、自然、教育">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">設計風格:</label>
-                                    <select class="form-control" id="iconStyleSelect">
-                                        <option value="modern">🔥 現代</option>
-                                        <option value="minimal">✨ 簡約</option>
-                                        <option value="detailed">🎨 詳細</option>
-                                        <option value="colorful">🌈 彩色</option>
-                                        <option value="monochrome">⚫ 單色</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="visual-controls">
-                                <button class="btn btn--primary" onclick="handleIconGeneration()">
-                                    🎨 生成智能圖標
-                                </button>
-                                <button class="btn btn--secondary" onclick="generateIconSet()">
-                                    🎯 生成圖標集
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 快速示例 -->
-                <div class="quick-examples">
-                    <h3 class="examples__title">🚀 快速示例</h3>
-                    <div class="example-buttons">
-                        <button class="btn btn--outline btn--sm" onclick="loadChartExample('sales')">
-                            📈 銷售數據圖表
-                        </button>
-                        <button class="btn btn--outline btn--sm" onclick="loadChartExample('survey')">
-                            📊 調查結果圖表
-                        </button>
-                        <button class="btn btn--outline btn--sm" onclick="loadIconExample('business')">
-                            💼 商業圖標
-                        </button>
-                        <button class="btn btn--outline btn--sm" onclick="loadIconExample('tech')">
-                            💻 科技圖標
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- 生成結果顯示區域 -->
-                <div class="visual-results" id="visualResults">
-                    <!-- 圖表和圖標結果將在這裡顯示 -->
-                </div>
-            </section>
-
-            <!-- Learning Workflow -->
-            <section class="workflow">
-                <h2 class="section-title">AI 學習流程</h2>
-                <div class="workflow__image">
-                    <img src="https://pplx-res.cloudinary.com/image/upload/v1751295308/pplx_code_interpreter/5ebad6c7_dq9hzv.jpg" alt="AI Learning Workflow" class="workflow__img">
-                    <p class="workflow__caption">AI PPT 模板學習工作流程 - 訓練 AI 理解和複製用戶簡報風格的六步驟流程</p>
-                </div>
-            </section>
-
-            <!-- Content Input Section -->
-            <section class="content-input">
-                <h2 class="section-title">內容輸入</h2>
+            
+            <!-- Step 2: Content Input -->
+            <section class="card">
+                <h2 class="section-title">第二步：輸入簡報大綱</h2>
                 <div class="content-input__form">
                     <div class="form-group">
-                        <label class="form-label" for="contentText">簡報內容</label>
-                        <textarea class="form-control" id="contentText" rows="8" placeholder="請輸入您的簡報內容...&#10;&#10;例如：&#10;標題：我的產品介紹&#10;&#10;第一章：產品概述&#10;- 產品特色&#10;- 市場定位&#10;&#10;第二章：技術優勢&#10;- 核心技術&#10;- 競爭優勢"></textarea>
+                        <textarea class="form-control" id="contentText" rows="10" placeholder="請輸入您的簡報大綱...&#10;&#10;例如：&#10;---&#10;title: 我們的季度報告&#10;---&#10;# 第一頁：封面&#10;## 副標題：Q3 成果分析&#10;---&#10;# 第二頁：市場回顧&#10;- 市場趨勢分析&#10;- 競爭對手動態&#10;- 主要機會點"></textarea>
                     </div>
-                    
-                    <div class="input-controls">
-                        <div class="form-group">
-                            <label class="form-label" for="presentationType">簡報類型</label>
-                            <select class="form-control" id="presentationType">
-                                <option value="business">商業提案</option>
-                                <option value="academic">學術演示</option>
-                                <option value="creative">創意作品集</option>
-                                <option value="training">培訓教材</option>
-                                <option value="project">專案報告</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label" for="slideCount">投影片數量：<span id="slideCountValue">10</span></label>
-                            <input type="range" class="slider" id="slideCount" min="5" max="20" value="10">
-                        </div>
-                    </div>
+                    <button class="btn btn--primary btn--full" id="generateBtn">🚀 生成 PPT</button>
                 </div>
             </section>
 
-            <!-- AI Generation Section -->
-            <section class="ai-generation">
-                <h2 class="section-title">AI 生成</h2>
-                <div class="generation-controls">
-                    <button class="btn btn--primary btn--lg" id="generateBtn">
-                        <span class="generate-btn__text">生成 PPT</span>
-                        <div class="loading-spinner hidden" id="loadingSpinner"></div>
-                    </button>
-                    
-                    <!-- 批量處理控制 -->
-                    <div class="batch-control-section">
-                        <button class="btn btn--outline btn--lg" onclick="openBatchPanel()">
-                            📦 批量處理
-                        </button>
-                        <button class="btn btn--secondary" onclick="showPerformanceMetrics()">
-                            📊 性能監控
-                        </button>
+            <!-- Step 3: Progress and Results -->
+            <section class="card">
+                <h2 class="section-title">第三步：進度與結果</h2>
+                <!-- Progress Tracking -->
+                <div id="progressContainer" class="progress-container" style="display: none;">
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="progressBar"></div>
                     </div>
+                    <p id="progressText" class="progress-text">正在處理中...</p>
                 </div>
-                
-                <div class="preview-area" id="previewArea">
-                    <h3 class="preview-area__title">預覽生成的投影片</h3>
-                    <div class="slide-thumbnails" id="slideThumbnails">
-                        <!-- Slide thumbnails will be generated here -->
-                    </div>
-                    <div class="preview-controls hidden" id="previewControls">
-                        <button class="btn btn--outline" id="regenerateBtn">重新生成</button>
-                        <button class="btn btn--secondary" id="modifyBtn">修改特定投影片</button>
-                    </div>
-                </div>
-            </section>
 
-            <!-- Feedback Section -->
-            <section class="feedback">
-                <h2 class="section-title">反饋與改進</h2>
-                <div class="feedback__content">
-                    <div class="rating-system">
-                        <h3 class="rating-system__title">為生成的投影片評分</h3>
-                        <div class="star-rating" id="starRating">
-                            <span class="star" data-rating="1">★</span>
-                            <span class="star" data-rating="2">★</span>
-                            <span class="star" data-rating="3">★</span>
-                            <span class="star" data-rating="4">★</span>
-                            <span class="star" data-rating="5">★</span>
-                        </div>
-                        <p class="rating-text" id="ratingText">請點擊星星評分</p>
-                    </div>
-                    
-                    <div class="feedback-form">
-                        <div class="form-group">
-                            <label class="form-label" for="feedbackText">您的反饋意見</label>
-                            <textarea class="form-control" id="feedbackText" rows="4" placeholder="請分享您對生成結果的意見和建議..."></textarea>
-                        </div>
-                        <button class="btn btn--primary" id="improveFeedbackBtn">改進 AI</button>
-                    </div>
+                <!-- Results -->
+                <div id="results" class="results-container" style="display: none;">
+                    <h3 class="results__title">🎉 生成成功！</h3>
+                    <p class="results__message">您的簡報已可供下載。</p>
+                    <a href="#" id="downloadLink" class="btn btn--success" download="generated_presentation.pptx">點此下載 PPT</a>
+                </div>
+
+                <!-- Error Display -->
+                <div id="errorContainer" class="error-container" style="display: none;">
+                    <h3 class="error__title">❌ 處理失敗</h3>
+                    <p id="errorMessage" class="error__message">抱歉，發生了未知的錯誤。</p>
                 </div>
             </section>
         </div>
     </main>
 
-    <!-- 批量處理面板 -->
-    <div id="batchProcessingPanel" class="processing-panel" style="display: none;">
-        <div class="panel-header">
-            <h3>📦 批量處理中心</h3>
-            <button class="close-panel" onclick="closeBatchPanel()">×</button>
-        </div>
-        
-        <div class="batch-tabs">
-            <button class="batch-tab active" data-tab="batch-upload">批量上傳</button>
-            <button class="batch-tab" data-tab="batch-jobs">工作管理</button>
-            <button class="batch-tab" data-tab="batch-monitor">性能監控</button>
-        </div>
-
-        <!-- 批量上傳區域 -->
-        <div id="batch-upload" class="batch-tab-content active">
-            <div class="batch-upload-area">
-                <div class="batch-drop-zone" ondrop="handleBatchDrop(event)" ondragover="allowBatchDrop(event)">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <p>拖拽多個PPT文件到此處或點擊選擇</p>
-                    <input type="file" id="batchFileInput" multiple accept=".ppt,.pptx" style="display: none;">
-                    <button class="select-files-btn" onclick="selectBatchFiles()">選擇文件</button>
-                </div>
-                
-                <div class="batch-file-list" id="batchFileList" style="display: none;">
-                    <h4>選中的文件：</h4>
-                    <div id="batchFiles"></div>
-                </div>
-                
-                <div class="batch-options">
-                    <label>
-                        處理類型：
-                        <select id="batchJobType">
-                            <option value="analyze">分析模板</option>
-                            <option value="generate">生成簡報</option>
-                            <option value="enhance">增強文件</option>
-                        </select>
-                    </label>
-                    
-                    <label>
-                        優先級：
-                        <select id="batchPriority">
-                            <option value="normal">普通</option>
-                            <option value="high">高</option>
-                            <option value="urgent">緊急</option>
-                            <option value="low">低</option>
-                        </select>
-                    </label>
-                    
-                    <button id="submitBatchJob" class="submit-batch-btn" disabled>提交批量任務</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 工作管理區域 -->
-        <div id="batch-jobs" class="batch-tab-content">
-            <div class="jobs-header">
-                <h4>批量工作列表</h4>
-                <button onclick="refreshJobs()" class="refresh-btn">🔄 刷新</button>
-            </div>
-            
-            <div class="jobs-list" id="jobsList">
-                <div class="no-jobs">暫無批量工作</div>
-            </div>
-        </div>
-
-        <!-- 性能監控區域 -->
-        <div id="batch-monitor" class="batch-tab-content">
-            <div class="monitor-header">
-                <h4>系統性能監控</h4>
-                <button onclick="refreshMetrics()" class="refresh-btn">🔄 刷新</button>
-            </div>
-            
-            <div class="metrics-grid">
-                <div class="metric-card">
-                    <h5>API性能</h5>
-                    <div id="apiMetrics">載入中...</div>
-                </div>
-                
-                <div class="metric-card">
-                    <h5>批量處理統計</h5>
-                    <div id="batchStats">載入中...</div>
-                </div>
-                
-                <div class="metric-card">
-                    <h5>緩存狀態</h5>
-                    <div id="cacheStats">載入中...</div>
-                </div>
-                
-                <div class="metric-card">
-                    <h5>系統資源</h5>
-                    <div id="systemStats">載入中...</div>
-                </div>
-            </div>
-            
-            <div class="cache-controls">
-                <button onclick="clearCache()" class="clear-cache-btn">清理緩存</button>
-                <button onclick="downloadMetrics()" class="download-metrics-btn">下載報告</button>
-            </div>
-        </div>
-    </div>
-
     <footer class="footer">
         <div class="container">
-            <p class="footer__text">© 2025 AI PPT 製作器 - 讓簡報製作更智能</p>
+            <p>&copy; 2024 AI PPT Generator. All rights reserved.</p>
         </div>
     </footer>
 
